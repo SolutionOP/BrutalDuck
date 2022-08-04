@@ -5,8 +5,6 @@ using UnityEngine;
 public class TouchInput : MonoBehaviour
 {
     private PhysicsMovement _physicsMovement;
-    private Vector3 _touchStartPosition;
-    private Vector3 _finishTouchPosition;
 
     private void Awake()
     {
@@ -17,15 +15,15 @@ public class TouchInput : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch currentTouch = Input.GetTouch(0);
-            if (currentTouch.phase == TouchPhase.Began)
+
+            if (currentTouch.phase == TouchPhase.Moved)
             {
-                _touchStartPosition = currentTouch.position;
+                _physicsMovement.RotateCar(currentTouch.position);
             }
             else if (currentTouch.phase == TouchPhase.Canceled
                   || currentTouch.phase == TouchPhase.Ended)
             {
-                _finishTouchPosition = currentTouch.position;
-                _physicsMovement.Move(_touchStartPosition, _finishTouchPosition);
+                _physicsMovement.Move();
             }
         }
     }
