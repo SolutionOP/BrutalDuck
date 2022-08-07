@@ -5,11 +5,13 @@ using UnityEngine;
 public class TouchInput : MonoBehaviour
 {
     private PhysicsMovement _physicsMovement;
+    private Rotation _rotation;
     private Vector3 _startTouchPos;
 
     private void Awake()
     {
         _physicsMovement = GetComponent<PhysicsMovement>();
+        _rotation = GetComponent<Rotation>();
     }
     private void Update()
     {
@@ -23,13 +25,13 @@ public class TouchInput : MonoBehaviour
             }
             else if (currentTouch.phase == TouchPhase.Moved)
             {
-                _physicsMovement.RotateCar(currentTouch.position, _startTouchPos);
+                _rotation.RotateCar(currentTouch.position, _startTouchPos);
             }
             else if (currentTouch.phase == TouchPhase.Canceled
                   || currentTouch.phase == TouchPhase.Ended)
             {
-                Vector2 diff = currentTouch.position - (Vector2)_startTouchPos;
-                _physicsMovement.Move(diff.magnitude);
+                Vector2 directionVector = currentTouch.position - (Vector2)_startTouchPos;
+                _physicsMovement.Move(directionVector.magnitude);
             }
         }
     }
