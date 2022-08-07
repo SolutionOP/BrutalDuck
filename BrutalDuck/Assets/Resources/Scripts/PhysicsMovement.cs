@@ -4,29 +4,21 @@ using UnityEngine;
 
 public class PhysicsMovement : MonoBehaviour
 {
-    [SerializeField] private float _tmpForce;
+    [SerializeField] private float _addForceValue;
     private Rigidbody _rigidBody;
+    private float _halfScreen;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
+        _halfScreen = Screen.height / 2;
     }
 
-    public void Move()
+    public void Move(float magnitude)
     {
-        _rigidBody.AddRelativeForce(Vector3.forward * _tmpForce, ForceMode.Acceleration);
-    }
-
-    public void RotateCar(Vector3 rotatePos)
-    {
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(rotatePos.x, rotatePos.y, Camera.main.transform.position.z * -1));
-        Vector3 difference = worldPos - transform.position;
-        difference.Normalize();
-        float rotAngle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        float fixedAngle = (rotAngle - 90f) * 3;
-        if (fixedAngle <= 90f || fixedAngle >=- 90f)
-        { 
-            transform.rotation = Quaternion.Euler(0f, fixedAngle , 0f);
-        }
+        float clampImpuls = Mathf.Clamp(magnitude, 0, _halfScreen);
+        float moveForce = clampImpuls * _addForceValue;
+        float impulsPercentage = (clampImpuls * 100) / _halfScreen;
+        _rigidBody.AddRelativeForce(Vector3.forward * moveForce, ForceMode.Acceleration);
     }
 }
