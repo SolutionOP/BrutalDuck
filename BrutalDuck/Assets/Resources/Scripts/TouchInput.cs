@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class TouchInput : MonoBehaviour
 {
+    [SerializeField] private GameObject _arrowPrefab; 
     private PhysicsMovement _physicsMovement;
-    private Rotation _rotation;
+    private ArrowRotation _arrowRotation;
+    private MomentumCalculation _momentumCalculation;
+    private CarRotation _carRotation;
     private Vector3 _startTouchPos;
+    private float _clampImpuls;
+    private float _impulsPercentage;
 
     private void Awake()
     {
         _physicsMovement = GetComponent<PhysicsMovement>();
-        _rotation = GetComponent<Rotation>();
+        _arrowRotation = _arrowPrefab.GetComponent<ArrowRotation>();
+        _momentumCalculation = GetComponent<MomentumCalculation>();
+        _carRotation = GetComponent<CarRotation>();
     }
     private void Update()
     {
@@ -22,16 +29,23 @@ public class TouchInput : MonoBehaviour
             if (currentTouch.phase == TouchPhase.Began)
             {
                 _startTouchPos = currentTouch.position;
+                _arrowPrefab.SetActive(true);
+                _carRotation.enabled = false;
             }
             else if (currentTouch.phase == TouchPhase.Moved)
             {
-                _rotation.RotateCar(currentTouch.position, _startTouchPos);
+                _clampImpuls = _momentumCalculation.GetClampImpuls((Vector2)_startTouchPos, currentTouch.position);
+                _impulsPercentage = _momentumCalculation.GetImpulsPercentage(_clampImpuls);
+                _arrowRotation.RotateArrow(currentTouch.position, _startTouchPos);
             }
             else if (currentTouch.phase == TouchPhase.Canceled
                   || currentTouch.phase == TouchPhase.Ended)
             {
-                Vector2 directionVector = currentTouch.position - (Vector2)_startTouchPos;
-                _physicsMovement.Move(directionVector.magnitude);
+                _clampImpuls = _momentumCalculation.GetClampImpuls((Vector2)_startTouchPos, currentTouch.position);
+                _carRotation.TargetRotation = _arrowPrefab.transform.rotation;
+                _carRotation.enabled = true;
+                _physicsMovement.Move(_momentumCalculation.GetMoveForceValue(_clampImpuls));
+                _arrowPrefab.SetActive(false);
             }
         }
     }
