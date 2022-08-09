@@ -6,9 +6,9 @@ public class ArrowRotation : MonoBehaviour
 {
     public void RotateArrow(Vector3 startPos, Vector3 endPos)
     {
-        Vector3 directionVector = endPos - startPos;
-        directionVector.Normalize();
-        float rotAngle = Mathf.Clamp(Mathf.Atan2(directionVector.x, directionVector.y) * Mathf.Rad2Deg, -90f, 90f);
-        transform.rotation = Quaternion.Euler(transform.rotation.x, rotAngle, transform.rotation.z);
+        float rotValue = 180 / (float)Screen.width;
+        float rotDegree = (rotValue * startPos.x) - 90f;
+        Quaternion inputRot = Quaternion.Euler(transform.rotation.x, -rotDegree, transform.rotation.z);
+        transform.rotation = FindObjectOfType<TouchInput>().transform.rotation * inputRot;
     }
 }
