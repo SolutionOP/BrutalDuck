@@ -5,6 +5,7 @@ using UnityEngine;
 public class TouchInput : MonoBehaviour
 {
     [SerializeField] private GameObject _arrowPrefab; 
+    [SerializeField] private UIController _uiController;
     private PhysicsMovement _physicsMovement;
     private ArrowRotation _arrowRotation;
     private MomentumCalculation _momentumCalculation;
@@ -36,16 +37,19 @@ public class TouchInput : MonoBehaviour
             {
                 _clampImpuls = _momentumCalculation.GetClampImpuls((Vector2)_startTouchPos, currentTouch.position);
                 _impulsPercentage = _momentumCalculation.GetImpulsPercentage(_clampImpuls);
+                _uiController.ChangeTensionForce((int)_impulsPercentage);
                 _arrowRotation.RotateArrow(currentTouch.position, _startTouchPos);
             }
             else if (currentTouch.phase == TouchPhase.Canceled
                   || currentTouch.phase == TouchPhase.Ended)
             {
+                _uiController.IsFinish = false;
                 _clampImpuls = _momentumCalculation.GetClampImpuls((Vector2)_startTouchPos, currentTouch.position);
                 _carRotation.TargetRotation = _arrowPrefab.transform.rotation;
                 _carRotation.enabled = true;
                 _physicsMovement.Move(_momentumCalculation.GetMoveForceValue(_clampImpuls));
                 _arrowPrefab.SetActive(false);
+                _uiController.ChangeTensionForce(0);
             }
         }
     }

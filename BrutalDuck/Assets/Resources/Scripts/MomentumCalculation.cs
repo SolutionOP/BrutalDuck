@@ -15,14 +15,14 @@ public class MomentumCalculation : MonoBehaviour
 
     public float GetMoveForceValue(float clampImpuls)
     {
-        return clampImpuls * _addForceValue;
+        float force = clampImpuls / Screen.height;
+        return force * _addForceValue;
     }
 
     public float GetClampImpuls(Vector2 startPos, Vector2 endPos)
     {
-        Vector2 directionVector = endPos - startPos;
-        float resultMagnitude = directionVector.magnitude;
-        return Mathf.Clamp(resultMagnitude, 0, _halfScreen);
+        float differentY = startPos.y - endPos.y;
+        return Mathf.Clamp(differentY, 0, _halfScreen);
     }
 
     public float GetImpulsPercentage(float clampImpuls)
