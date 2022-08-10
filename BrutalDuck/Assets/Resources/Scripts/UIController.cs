@@ -8,6 +8,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text _tensionForceText;
     [SerializeField] private Text _timeText;
     [SerializeField] private Text _passedText;
+    [SerializeField] private GameObject _menuClaster;
+    [SerializeField] private StateController _stateController;
     public bool IsFinish;
     private float _timerValue = 0f;
 
@@ -42,5 +44,24 @@ public class UIController : MonoBehaviour
     private void NullTimer()
     {
         _timeText.text = "Time: " + 0f + "s";
+    }
+
+    public void PauseGame()
+    {
+        _stateController.IsTimeStoped = true;
+        _menuClaster.SetActive(true);
+        ChangeTimeScale(0f);
+    }
+
+    private void ChangeTimeScale(float scaleValue)
+    {
+        Time.timeScale = scaleValue;
+    }
+
+    public void UnpauseGame()
+    {
+        _stateController.IsTimeStoped = false;
+        _menuClaster.SetActive(false);
+        ChangeTimeScale(1f);
     }
 }

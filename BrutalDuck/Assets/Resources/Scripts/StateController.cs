@@ -5,15 +5,16 @@ using UnityEngine;
 public class StateController : MonoBehaviour
 {
     [SerializeField] private GameObject _checkPoint;
+    private TouchInput _touchInput;
     private CheckPointMove _checkPointMove;
     private Rigidbody _rigidBody;
-    private TouchInput _touchInput;
+    public bool IsTimeStoped = false;
 
     private void Awake()
     {
+        _touchInput = GetComponent<TouchInput>();
         _checkPointMove = _checkPoint.GetComponent<CheckPointMove>();
         _rigidBody = GetComponent<Rigidbody>();
-        _touchInput = GetComponent<TouchInput>();
     }
     private void Update()
     {
@@ -22,13 +23,18 @@ public class StateController : MonoBehaviour
             _checkPointMove.MoveCheckPoint(transform.gameObject);
         }
 
-        if (_rigidBody.velocity != Vector3.zero)
+        if (_rigidBody.velocity != Vector3.zero || IsTimeStoped)
         {
-            _touchInput.enabled = false;
+            ChangeInputState(false);
         }
         else
         {
-            _touchInput.enabled = true;
+            ChangeInputState(true);
         }
+    }
+
+    public void ChangeInputState(bool state)
+    {
+        _touchInput.enabled = state;
     }
 }
