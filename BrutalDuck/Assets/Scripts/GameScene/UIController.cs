@@ -12,12 +12,14 @@ public class UIController : MonoBehaviour
     [SerializeField] private StateController _stateController;
     [SerializeField] private BestResult _bestResult;
     [SerializeField] private GameSceneManager _gameSceneManager;
+    private DistanceCalculator _distanceCalculator;
     public bool IsFinish;
     private float _timerValue = 0f;
 
 
     private void Start()
     {
+        _distanceCalculator = GetComponent<DistanceCalculator>();
         IsFinish = true;
     }
     private void Update()
@@ -25,6 +27,7 @@ public class UIController : MonoBehaviour
         if (!IsFinish)
         {
             ChangeTimer(Time.deltaTime);
+            ChangePassedDistance();
         }
         else
         {
@@ -42,6 +45,12 @@ public class UIController : MonoBehaviour
         _timerValue += time;
         _bestResult.TmpResultTime = _timerValue;
         _timeText.text = "Time: " + _timerValue.ToString("0.0000") + "s";
+    }
+
+    private void ChangePassedDistance()
+    {
+        int distancePercentage = _distanceCalculator.CalculateDistancePercentage();
+        _passedText.text = "Passed " + distancePercentage.ToString() + "%";
     }
 
     private void NullTimer()
