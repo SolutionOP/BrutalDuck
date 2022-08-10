@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinishPart
       objectReference: {fileID: 0}
+    - target: {fileID: 6045400425151818796, guid: 71896563811493640ad45310e14290ee, type: 3}
+      propertyPath: m_TagString
+      value: Finish
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71896563811493640ad45310e14290ee, type: 3}
 --- !u!1 &16418342
@@ -354,9 +358,9 @@ GameObject:
   - component: {fileID: 118947834}
   - component: {fileID: 118947833}
   - component: {fileID: 118947832}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1427,6 +1431,7 @@ MonoBehaviour:
   _tensionForceText: {fileID: 1920159583}
   _timeText: {fileID: 684441678}
   _passedText: {fileID: 16418343}
+  IsFinish: 0
 --- !u!1001 &2062656046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1484,6 +1489,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71896563811493640ad45310e14290ee, type: 3}
+--- !u!1 &2074403422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2074403424}
+  - component: {fileID: 2074403423}
+  m_Layer: 0
+  m_Name: CheckPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2074403423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074403422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0720a7148c4dd4f863f06ab34d5950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2074403424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074403422}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.855871, z: 3.1886225}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &388252348903711716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1529,15 +1577,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1747275120427216732, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
       propertyPath: m_Mass
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1747275120427216732, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
       propertyPath: m_AngularDrag
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1747275120427216732, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2125628423053451573, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2228596495433783290, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
+      propertyPath: force
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2228596495433783290, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
       propertyPath: _arrowPrefab
@@ -1547,6 +1603,10 @@ PrefabInstance:
       propertyPath: _uiController
       value: 
       objectReference: {fileID: 2039903930}
+    - target: {fileID: 2228596495433783290, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
+      propertyPath: _checkPointMove
+      value: 
+      objectReference: {fileID: 2074403423}
     - target: {fileID: 2834695059800813365, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1632,12 +1692,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388252348903711717}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e7e08d3e65bdc649a9e42bb0fb865f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 5
+  _rotationSpeed: 100
   TargetRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &388252348903711719 stripped
 GameObject:
@@ -1657,6 +1717,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _addForceValue: 4000
+--- !u!114 &388252348903711723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8164555660050893476, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
+  m_PrefabInstance: {fileID: 388252348903711716}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388252348903711717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29e3bde1dc8c364a88a3a83f120f88c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &388252348903711726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5873163827063475771, guid: d96afce188ceb494ba1fff76dd288204, type: 3}
@@ -1686,6 +1757,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be538e9088255c4ab10234ee11ad186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &388252348903711729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388252348903711717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79434fb3f8936041b2ca484d1227036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _checkPointObject: {fileID: 2074403422}
+  _uiController: {fileID: 2039903930}
+  _physicsMovement: {fileID: 388252348903711723}
+--- !u!114 &388252348903711730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388252348903711717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e97654e3cdfe754abd8e88c02b236e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _checkPoint: {fileID: 2074403422}
 --- !u!1001 &5421337051142416022
 PrefabInstance:
   m_ObjectHideFlags: 0

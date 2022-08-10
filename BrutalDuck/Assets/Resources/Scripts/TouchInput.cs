@@ -31,7 +31,6 @@ public class TouchInput : MonoBehaviour
             {
                 _startTouchPos = currentTouch.position;
                 _arrowPrefab.SetActive(true);
-                _carRotation.enabled = false;
             }
             else if (currentTouch.phase == TouchPhase.Moved)
             {
@@ -43,13 +42,16 @@ public class TouchInput : MonoBehaviour
             else if (currentTouch.phase == TouchPhase.Canceled
                   || currentTouch.phase == TouchPhase.Ended)
             {
-                _uiController.IsFinish = false;
-                _clampImpuls = _momentumCalculation.GetClampImpuls((Vector2)_startTouchPos, currentTouch.position);
-                _carRotation.TargetRotation = _arrowPrefab.transform.rotation;
-                _carRotation.enabled = true;
-                _physicsMovement.Move(_momentumCalculation.GetMoveForceValue(_clampImpuls));
-                _arrowPrefab.SetActive(false);
-                _uiController.ChangeTensionForce(0);
+                if (_startTouchPos != Vector3.zero)
+                {
+                    _uiController.IsFinish = false;
+                    _clampImpuls = _momentumCalculation.GetClampImpuls((Vector2)_startTouchPos, currentTouch.position);
+                    _carRotation.TargetRotation = _arrowPrefab.transform.rotation;
+                    _physicsMovement.Move(_momentumCalculation.GetMoveForceValue(_clampImpuls));
+                    _arrowPrefab.SetActive(false);
+                    _uiController.ChangeTensionForce(0);
+                    _startTouchPos = Vector3.zero;  
+                }
             }
         }
     }
