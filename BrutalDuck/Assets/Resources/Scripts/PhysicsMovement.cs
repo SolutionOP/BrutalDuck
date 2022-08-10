@@ -15,4 +15,9 @@ public class PhysicsMovement : MonoBehaviour
     {
         _rigidBody.AddRelativeForce(Vector3.forward * moveForce, ForceMode.Acceleration);
     }
+
+    public void NullVelocity()
+    {
+        _rigidBody.velocity = Vector3.zero;
+    }
 }
