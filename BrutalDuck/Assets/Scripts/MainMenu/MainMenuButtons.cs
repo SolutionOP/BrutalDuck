@@ -19,8 +19,8 @@ public class MainMenuButtons : MonoBehaviour
         _mainSceneManager.LoadSomeScene(1);
     }
 
-    private void SetBestResult()
+    public void SetBestResult()
     {
-        _bestTime.text = _bestResultSO.ResultTime.ToString("0.0000");
+        _bestTime.text = _bestResultSO.ResultTime.ToString("0.0000") + "s";
     }
 }

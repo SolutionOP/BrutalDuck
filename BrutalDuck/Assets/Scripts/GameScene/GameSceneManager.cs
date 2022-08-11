@@ -13,15 +13,22 @@ public class GameSceneManager : MonoBehaviour
     }
     public void ReachedFinishLine()
     {
-        if (_bestResultSO.TmpResultTime < _bestResultSO.ResultTime)
+        if (_bestResultSO.TmpResultTime < _bestResultSO.ResultTime
+            || _bestResultSO.ResultTime == 0f)
         {
             _bestResultSO.ResultTime = _bestResultSO.TmpResultTime;
         }
+        SaveData();
         LoadSomeScene(1);
     }
 
     public void LoadSomeScene(int sceneManager)
     {
         SceneManager.LoadScene(sceneManager);
+    }
+
+    private void SaveData()
+    {
+        PlayerPrefs.SetFloat("bestTime", _bestResultSO.ResultTime);
     }
 }

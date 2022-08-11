@@ -8,10 +8,11 @@ public class StateController : MonoBehaviour
     private TouchInput _touchInput;
     private CheckPointMove _checkPointMove;
     private Rigidbody _rigidBody;
-    public bool IsTimeStoped = false;
+    public bool IsTimeStoped;
 
     private void Awake()
     {
+        IsTimeStoped = false;
         _touchInput = GetComponent<TouchInput>();
         _checkPointMove = _checkPoint.GetComponent<CheckPointMove>();
         _rigidBody = GetComponent<Rigidbody>();
@@ -20,10 +21,11 @@ public class StateController : MonoBehaviour
     {
         if ((_rigidBody.velocity == Vector3.zero) && (transform.position != _checkPoint.transform.position))
         {
-            _checkPointMove.MoveCheckPoint(transform.gameObject);
+            _checkPointMove.MoveCheckPoint(this.gameObject);
         }
 
-        if (_rigidBody.velocity != Vector3.zero || IsTimeStoped)
+        if (IsTimeStoped || _rigidBody.velocity.z > 0.5f
+            || _rigidBody.velocity.x > 0.5f || _rigidBody.velocity.y > 0.5f)
         {
             ChangeInputState(false);
         }
