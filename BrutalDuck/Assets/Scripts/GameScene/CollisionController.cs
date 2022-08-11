@@ -13,9 +13,9 @@ public class CollisionController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            _physicsMovement.NullVelocity();
             transform.position = _checkPointObject.transform.position;
             transform.rotation = _checkPointObject.transform.rotation;
+            _physicsMovement.NullVelocity();
         }
         else if (collision.gameObject.CompareTag("Finish"))
         {

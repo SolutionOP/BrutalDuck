@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2316273cb360e2343a37e54e3cfaeba8, type: 3}
   m_Name: PlayerResult
   m_EditorClassIdentifier: 
-  ResultTime: 4
-  CountOfAttempts: 1
+  ResultTime: 0
+  TmpResultTime: 0
